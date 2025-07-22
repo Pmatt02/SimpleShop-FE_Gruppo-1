@@ -1,14 +1,62 @@
-import { products } from "@/lib/Products";
+import { useState } from "react";
+import { products as allProducts } from "@/lib/Products";
 import Card from "@/components/ui/Card";
 import CardContent from "@/components/ui/CardContent";
 import { Button } from "@/components/ui/button";
 
 export default function ProductList() {
+    const [categoriaFiltro, setCategoriaFiltro] = useState("tutte");
+    const [ordinamento, setOrdinamento] = useState("default");
+
+    const categorieDisponibili = ["tutte", ...new Set(allProducts.map(p => p.category))];
+
+    // Filtra
+    let prodottiFiltrati = categoriaFiltro === "tutte"
+        ? allProducts
+        : allProducts.filter(p => p.category === categoriaFiltro);
+
+    // Ordina per prezzo
+    if (ordinamento === "prezzo-asc") {
+        prodottiFiltrati.sort((a, b) => a.price - b.price);
+    } else if (ordinamento === "prezzo-desc") {
+        prodottiFiltrati.sort((a, b) => b.price - a.price);
+    }
+
     return (
         <section id="prodotti" className="px-6 py-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-12 text-center">I nostri prodotti</h2>
+            {/* Titolo principale */}
+            <h2 className="text-4xl font-bold text-gray-800 mb-6 text-center">
+                I nostri prodotti
+            </h2>
+
+            {/* Filtri - secondo livello */}
+            <div className="flex justify-end mb-10 gap-4">
+                <select
+                    value={categoriaFiltro}
+                    onChange={(e) => setCategoriaFiltro(e.target.value)}
+                    className="border rounded-md px-4 py-2 text-gray-700"
+                >
+                    {categorieDisponibili.map(categoria => (
+                        <option key={categoria} value={categoria}>
+                            {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
+                        </option>
+                    ))}
+                </select>
+
+                <select
+                    value={ordinamento}
+                    onChange={(e) => setOrdinamento(e.target.value)}
+                    className="border rounded-md px-4 py-2 text-gray-700"
+                >
+                    <option value="default">Ordina per</option>
+                    <option value="prezzo-asc">Prezzo: basso → alto</option>
+                    <option value="prezzo-desc">Prezzo: alto → basso</option>
+                </select>
+            </div>
+
+            {/* Griglia prodotti */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                {products.map((product) => (
+                {prodottiFiltrati.map((product) => (
                     <Card key={product.id}>
                         <img
                             src={product.image}
@@ -19,7 +67,9 @@ export default function ProductList() {
                             <h3 className="text-2xl font-semibold text-gray-800 mb-2">{product.name}</h3>
                             <p className="text-gray-600 mb-4 text-sm">{product.description}</p>
                             <div className="flex justify-between items-center">
-                                <span className="text-blue-600 font-bold text-lg">{product.price}</span>
+                <span className="text-blue-600 font-bold text-lg">
+                  {product.price.toFixed(2)} €
+                </span>
                                 <Button className="rounded-full px-5 py-2 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white">
                                     Aggiungi
                                 </Button>
