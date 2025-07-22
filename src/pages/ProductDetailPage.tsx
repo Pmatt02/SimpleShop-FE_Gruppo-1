@@ -12,7 +12,7 @@ export const ProductDetailPage = ({id}: ProductDetailProps) => {
     <>
       <Navbar />
 
-      <div className="flex flex-col m-6 gap-3 items-center lg:flex-row lg:justify-center lg:h-screen lg:gap-6">
+      <div className="flex flex-col m-6 gap-3 items-center lg:flex-row lg:justify-center lg:gap-6 min-[560px]:mt-20">
         <img
           src={product?.image}
           alt=""
