@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import type { Product } from "../types/Product";
 import { useCart } from "@/context/CartContext";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/cartCard";
 import { Button } from "@/components/ui/button";
 import { Plus, Minus, Trash2, ShoppingCart } from "lucide-react"
 
