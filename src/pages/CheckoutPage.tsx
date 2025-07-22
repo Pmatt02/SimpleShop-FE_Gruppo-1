@@ -9,7 +9,6 @@ export const CheckoutPage = () => {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
   } = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
