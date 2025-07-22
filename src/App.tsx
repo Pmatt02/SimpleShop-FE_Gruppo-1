@@ -4,7 +4,6 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 //import CartPage from './pages/CartPage';
 
-
 const App: React.FC = () => {
     return (
         <Router>
