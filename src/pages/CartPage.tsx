@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { Product } from "../types/Product";
+import type { CartProduct } from "../types/Product";
 import { useCart } from "@/context/CartContext";
 import { Card, CardContent } from "@/components/ui/cartCard";
 import { Button } from "@/components/ui/button";
@@ -7,23 +7,6 @@ import { Plus, Minus, Trash2, ShoppingCart } from "lucide-react"
 
 const CartPage: React.FC = () => {
 
-    const Cart: Product[] = [{
-        id: 0,
-        title: "Test",
-        price: 0,
-        description: "",
-        category: "",
-        image: "",
-        quantity: 1
-    }, {
-        id: 1,
-        title: "Test1",
-        price: 0,
-        description: "",
-        category: "",
-        image: "",
-        quantity: 3
-    },];
 
     //gestione azioni nel carrello
     const { state, dispatch } = useCart();
@@ -42,13 +25,15 @@ const CartPage: React.FC = () => {
 
     //prova test
     const handleAddTestProduct = () => {
-        const testProduct: Product = {
-            id: Math.floor(Math.random() * 1000), // ID unico simulato
-            title: "Prodotto Finto",
-            price: Math.random() * 100,
-            description: "Un prodotto di test per simulare l'aggiunta",
-            category: "fake",
-            image: "https://via.placeholder.com/150",
+        const testProduct: CartProduct = {
+            product: {
+                id: Math.floor(Math.random() * 1000), // ID unico simulato
+                title: "Prodotto Finto",
+                price: Math.random() * 100,
+                description: "Un prodotto di test per simulare l'aggiunta",
+                category: "fake",
+                image: "https://via.placeholder.com/150"
+            },
             quantity: 1
         };
 
