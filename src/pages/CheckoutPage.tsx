@@ -4,7 +4,7 @@ import { formSchema } from "@/shemas/formSchema";
 import type { FormSchema } from "@/types/FormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const CheckoutPage = () => {
   const navigate = useNavigate();

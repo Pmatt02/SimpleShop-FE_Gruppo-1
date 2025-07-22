@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { useProduct } from "@/hooks/useFetchData";
 import { useParams } from "react-router-dom";
