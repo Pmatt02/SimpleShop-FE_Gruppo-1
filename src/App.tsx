@@ -1,10 +1,10 @@
 import './App.css'
-import { CheckoutPage } from './pages/CheckoutPage'
+import { OrderReceivedPage } from './pages/OrderReceivedPage'
 
 function App() {
   return (
     <>
-
+    
     </>
   )
 }
