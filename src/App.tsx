@@ -1,22 +1,20 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import HomePage from './pages/HomePage';
-//import CartPage from './pages/CartPage';
+import React from "react";
+import { ProductDetailPage } from "./pages/ProductDetailPage";
+import HomePage from "./pages/HomePage";
+import Navbar from "./components/Navbar";
+import { CheckoutPage } from "./pages/CheckoutPage";
+import { OrderReceivedPage } from "./pages/OrderReceivedPage";
 
 const App: React.FC = () => {
-    return (
-        <Router>
-            <Navbar />
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                {/* Se vuoi la pagina prodotti, importala e usa il nome corretto */}
-                {/* <Route path="/prodotti" element={<ProdottiPage />} /> */}
-                {/* Se invece hai ProductDetailPage o CartPage, usa quelli */}
-
-            </Routes>
-        </Router>
-    );
+  return (
+    <>
+        <Navbar />
+        {/* <ProductDetailPage id={1}/> */}
+        {/* <HomePage /> */}
+        {/* <CheckoutPage /> */}
+        <OrderReceivedPage />
+    </>
+  );
 };
 
 export default App;
