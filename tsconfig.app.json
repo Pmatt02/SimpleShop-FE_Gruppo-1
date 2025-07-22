@@ -25,7 +25,8 @@
 
     /* Shadcn */
     "baseUrl": ".",
-    "paths": {"@/*": ["./src/*"]}
+    "paths": {"@/*": ["./src/*"]},
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"]
 }

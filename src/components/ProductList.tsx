@@ -1,83 +1,87 @@
 import { useState } from "react";
-import { products as allProducts } from "@/lib/Products";
+import { useCategories, useProducts, useProductsByCategory } from "@/hooks/useFetchData";
+import { Button } from "@/components/ui/button";
 import Card from "@/components/ui/Card";
 import CardContent from "@/components/ui/CardContent";
-import { Button } from "@/components/ui/button";
 
 export default function ProductList() {
-    const [categoriaFiltro, setCategoriaFiltro] = useState("tutte");
-    const [ordinamento, setOrdinamento] = useState("default");
+    const { categories, isLoading: loadingCategories, isError: errorCategories } = useCategories();
+    const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-    const categorieDisponibili = ["tutte", ...new Set(allProducts.map(p => p.category))];
+    // Tutti i prodotti (default)
+    const {
+        products: allProducts,
+        isLoading: loadingAll,
+        isError: errorAll,
+    } = useProducts();
 
-    // Filtra
-    let prodottiFiltrati = categoriaFiltro === "tutte"
-        ? allProducts
-        : allProducts.filter(p => p.category === categoriaFiltro);
+    // Prodotti filtrati (se una categoria è selezionata)
+    const {
+        products: filteredProducts,
+        isLoading: loadingFiltered,
+        isError: errorFiltered,
+    } = useProductsByCategory(selectedCategory);
 
-    // Ordina per prezzo
-    if (ordinamento === "prezzo-asc") {
-        prodottiFiltrati.sort((a, b) => a.price - b.price);
-    } else if (ordinamento === "prezzo-desc") {
-        prodottiFiltrati.sort((a, b) => b.price - a.price);
+    // Logica per decidere cosa mostrare
+    const productsToShow = selectedCategory ? filteredProducts : allProducts;
+    const isLoading = selectedCategory ? loadingFiltered : loadingAll;
+    const isError = selectedCategory ? errorFiltered : errorAll;
+
+    if (loadingCategories || isLoading) {
+        return <div className="text-center mt-10">Caricamento...</div>;
+    }
+
+    if (errorCategories || isError) {
+        return <div className="text-red-500 text-center mt-10">Errore nel caricamento dei dati</div>;
     }
 
     return (
-        <section id="prodotti" className="px-6 py-16">
-            {/* Titolo principale */}
-            <h2 className="text-4xl font-bold text-gray-800 mb-6 text-center">
-                I nostri prodotti
-            </h2>
-
-            {/* Filtri - secondo livello */}
-            <div className="flex justify-end mb-10 gap-4">
+        <div className="px-6 py-12">
+            {/* Filtro categorie */}
+            <div className="mb-10 text-center">
+                <label className="mr-3 text-lg font-medium text-gray-700">Filtra per categoria:</label>
                 <select
-                    value={categoriaFiltro}
-                    onChange={(e) => setCategoriaFiltro(e.target.value)}
-                    className="border rounded-md px-4 py-2 text-gray-700"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="px-4 py-2 border border-gray-300 rounded-md shadow-sm"
                 >
-                    {categorieDisponibili.map(categoria => (
-                        <option key={categoria} value={categoria}>
-                            {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
+                    <option value="">Tutte</option>
+                    {categories.map((cat) => (
+                        <option key={cat} value={cat}>
+                            {cat}
                         </option>
                     ))}
                 </select>
-
-                <select
-                    value={ordinamento}
-                    onChange={(e) => setOrdinamento(e.target.value)}
-                    className="border rounded-md px-4 py-2 text-gray-700"
-                >
-                    <option value="default">Ordina per</option>
-                    <option value="prezzo-asc">Prezzo: basso → alto</option>
-                    <option value="prezzo-desc">Prezzo: alto → basso</option>
-                </select>
             </div>
 
-            {/* Griglia prodotti */}
+            {/* Lista prodotti */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                {prodottiFiltrati.map((product) => (
-                    <Card key={product.id}>
+                {productsToShow.map((product) => (
+                    <Card
+                        key={product.id}
+                        className="h-[600px] rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-1 flex flex-col"
+                    >
                         <img
                             src={product.image}
-                            alt={product.name}
-                            className="w-full h-48 object-cover"
+                            alt={product.title}
+                            className="w-full h-[300px] object-contain rounded-t-2xl bg-white"
                         />
-                        <CardContent>
-                            <h3 className="text-2xl font-semibold text-gray-800 mb-2">{product.name}</h3>
-                            <p className="text-gray-600 mb-4 text-sm">{product.description}</p>
-                            <div className="flex justify-between items-center">
-                <span className="text-blue-600 font-bold text-lg">
-                  {product.price.toFixed(2)} €
-                </span>
-                                <Button className="rounded-full px-5 py-2 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white">
+                        <CardContent className="p-6 flex flex-col flex-grow">
+                            <h3 className="text-xl font-semibold text-gray-800 mb-2">{product.title}</h3>
+                            <p className="text-gray-600 text-sm mb-3 flex-grow">
+                                {product.description.slice(0, 100)}...
+                            </p>
+                            <div className="flex justify-between items-center mt-auto">
+                                <span className="text-blue-600 font-bold text-lg">€{product.price}</span>
+                                <Button className="rounded-full px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white">
                                     Aggiungi
                                 </Button>
                             </div>
                         </CardContent>
                     </Card>
+
                 ))}
             </div>
-        </section>
+        </div>
     );
 }
