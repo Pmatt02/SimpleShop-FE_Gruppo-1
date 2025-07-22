@@ -1,6 +1,11 @@
 import { Button } from "@/components/ui/button";
 
-export const ProductDetailPage = () => {
+type ProductDetailProps = {
+    id: number
+}
+
+export const ProductDetailPage = ({id}: ProductDetailProps) => {
+  // TO DO: chiamata api per ricevere prodotto
   return (
     <>
       <div className="flex flex-col m-6 gap-3 items-center lg:flex-row lg:justify-center lg:h-screen lg:gap-6">
@@ -27,5 +32,3 @@ export const ProductDetailPage = () => {
     </>
   );
 };
-
-// lg:flex-row lg:justify-center lg:items-center lg:h-screen lg:gap-6
