@@ -4,8 +4,11 @@ import { formSchema } from "@/shemas/formSchema";
 import type { FormSchema } from "@/types/FormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 
 export const CheckoutPage = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -22,6 +25,7 @@ export const CheckoutPage = () => {
 
   const onSubmit: SubmitHandler<FormSchema> = (data) => {
     console.log("Dati inviati:", data);
+    navigate('/success')
   };
 
   return (
@@ -74,7 +78,7 @@ export const CheckoutPage = () => {
             {errors.address && (
               <p className="text-red-500">• {errors.address.message}</p>
             )}
-            <Button className="mt-4">Invia ordine</Button>
+              <Button className="mt-4">Invia ordine</Button>
           </form>
         </div>
       </div>
