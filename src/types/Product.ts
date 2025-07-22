@@ -1,12 +1,8 @@
-export type Product = {
-    category: string;
-    description: string;
+export interface Product {
     id: number;
-    image: string;
-    price: number;
-    rating: {
-        count: number;
-        rate: number;
-    };
     title: string;
+    description: string;
+    price: number;
+    category: string;
+    image: string;
 }

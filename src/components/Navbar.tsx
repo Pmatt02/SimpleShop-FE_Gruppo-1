@@ -1,4 +1,4 @@
-import { ShoppingCart, Home, Package } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import logoImg from "@/assets/logo.png";
 
 
@@ -10,24 +10,13 @@ export default function Navbar() {
                 <img src={logoImg} alt="Logo" className="h-10 w-auto" />
             </div>
 
-
-            {/* Link al centro */}
-            <div className="flex items-center gap-8">
-                <a
-                    href="/"
-                    className="flex items-center gap-1 text-gray-700 hover:text-blue-600 font-medium text-lg"
-                >
-                    <Home className="w-5 h-5" />
+            {/* Link al centro per homepage */}
+            <div>
+                <a href="/" className="text-lg font-semibold text-gray-800 hover:text-blue-600 transition-colors">
                     Home
                 </a>
-                <a
-                    href="#prodotti"
-                    className="flex items-center gap-1 text-gray-700 hover:text-blue-600 font-medium text-lg"
-                >
-                    <Package className="w-5 h-5" />
-                    Prodotti
-                </a>
             </div>
+
 
             {/* Carrello a destra */}
             <div>
