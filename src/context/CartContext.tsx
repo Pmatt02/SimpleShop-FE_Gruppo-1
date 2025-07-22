@@ -7,7 +7,7 @@ const initialState: InitialState = {
 }
 
 //creo il context del carrello
-const CartContext = createContext<{
+export const CartContext = createContext<{
     state: InitialState;
     dispatch: React.Dispatch<CartAction>;
 } | undefined>(undefined);
@@ -76,15 +76,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return (
         //rende disponibili lo stato attuale e la funzione per modificarlo
         <CartContext.Provider value={{ state, dispatch }}>
-            //componenti React annidati (children) dentro cartProvider che erediteranno questo stato
             {children}
         </CartContext.Provider>
+        //componenti React annidati (children) dentro cartProvider che erediteranno questo stato
     );
 };
 
 // Hook custom per usare il carrello facilmente
 export const useCart = () => {
-    const context = useContext(CartContext); //con questo ottendo lo stato e il dispatcher dal provider
+    const context = useContext(CartContext); //con questo ottengo lo stato e il dispatcher dal provider
     //errore se se proviamo ad usarlo fuori dal provider
     if (!context) {
         throw new Error("useCart deve essere usato dentro CartProvider");

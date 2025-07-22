@@ -1,11 +1,12 @@
 import './App.css'
 import CartPage from './pages/CartPage'
+import { CartProvider, useCart } from './context/CartContext'
 
 function App() {
   return (
-    <div>
+    <CartProvider>
       <CartPage></CartPage>
-    </div>
+    </CartProvider>
   )
 }
 
