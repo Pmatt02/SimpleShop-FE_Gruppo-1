@@ -1,3 +1,6 @@
+
+import CartPage from './pages/CartPage'
+import { CartProvider, useCart } from './context/CartContext'
 import React from "react";
 import { ProductDetailPage } from "./pages/ProductDetailPage";
 import HomePage from "./pages/HomePage";
@@ -9,10 +12,13 @@ const App: React.FC = () => {
   return (
     <>
         <Navbar />
+        <HomePage />
         {/* <ProductDetailPage id={1}/> */}
-        {/* <HomePage /> */}
         {/* <CheckoutPage /> */}
-        <OrderReceivedPage />
+        {/* <CartProvider>
+          <CartPage></CartPage>
+        </CartProvider> */}
+        {/* <OrderReceivedPage /> */}
     </>
   );
 };
