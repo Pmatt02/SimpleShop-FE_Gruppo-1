@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCategories, useProducts, useProductsByCategory } from "@/hooks/useFetchData";
 import { Button } from "@/components/ui/button";
-import Card from "@/components/ui/cartCard";
+import Card from "@/components/ui/Card";
 import CardContent from "@/components/ui/CardContent";
 
 export default function ProductList() {
