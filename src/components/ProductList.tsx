@@ -1,46 +1,25 @@
-import { useState } from "react";
-import {
-  useCategories,
-  useProducts,
-  useProductsByCategory,
-} from "@/hooks/useFetchData";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/ui/Card";
 import CardContent from "@/components/ui/CardContent";
+import { useFilter } from "@/hooks/useFilter";
 import { Link } from "react-router-dom";
 
 export default function ProductList() {
+  // Usa il custom hook correttamente:
   const {
     categories,
-    isLoading: loadingCategories,
-    isError: errorCategories,
-  } = useCategories();
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+    selectedCategory,
+    setSelectedCategory,
+    products,
+    isLoading,
+    isError,
+  } = useFilter();
 
-  // Tutti i prodotti (default)
-  const {
-    products: allProducts,
-    isLoading: loadingAll,
-    isError: errorAll,
-  } = useProducts();
-
-  // Prodotti filtrati (se una categoria è selezionata)
-  const {
-    products: filteredProducts,
-    isLoading: loadingFiltered,
-    isError: errorFiltered,
-  } = useProductsByCategory(selectedCategory);
-
-  // Logica per decidere cosa mostrare
-  const productsToShow = selectedCategory ? filteredProducts : allProducts;
-  const isLoading = selectedCategory ? loadingFiltered : loadingAll;
-  const isError = selectedCategory ? errorFiltered : errorAll;
-
-  if (loadingCategories || isLoading) {
+  if (isLoading) {
     return <div className="text-center mt-10">Caricamento...</div>;
   }
 
-  if (errorCategories || isError) {
+  if (isError) {
     return (
       <div className="text-red-500 text-center mt-10">
         Errore nel caricamento dei dati
@@ -71,35 +50,35 @@ export default function ProductList() {
 
       {/* Lista prodotti */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {productsToShow.map((product) => (
-          <Link to={`/product/${product.id}`}>
-            <Card
-              key={product.id}
-              className="h-[600px] rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-1 flex flex-col cursor-pointer"
-            >
+        {products.map((product) => (
+          <Card
+            key={product.id}
+            className="h-[600px] rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-1 flex flex-col"
+          >
+            <Link to={`/product/${product.id}`}>
               <img
                 src={product.image}
                 alt={product.title}
-                className="w-full h-[300px] object-contain rounded-t-2xl bg-white"
+                className="w-full h-[300px] object-contain rounded-t-2xl bg-white cursor-pointer"
               />
-              <CardContent className="p-6 flex flex-col flex-grow">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                  {product.title}
-                </h3>
-                <p className="text-gray-600 text-sm mb-3 flex-grow">
-                  {product.description.slice(0, 100)}...
-                </p>
-                <div className="flex justify-between items-center mt-auto">
-                  <span className="text-blue-600 font-bold text-lg">
-                    €{product.price}
-                  </span>
-                  <Button className="rounded-full px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white">
-                    Aggiungi
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
+            </Link>
+            <CardContent className="p-6 flex flex-col flex-grow">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                {product.title}
+              </h3>
+              <p className="text-gray-600 text-sm mb-3 flex-grow">
+                {product.description.slice(0, 100)}...
+              </p>
+              <div className="flex justify-between items-center mt-auto">
+                <span className="text-blue-600 font-bold text-lg">
+                  €{product.price}
+                </span>
+                <Button className="rounded-full px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white">
+                  Aggiungi
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </div>

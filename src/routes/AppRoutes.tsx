@@ -1,3 +1,4 @@
+import CartPage from '@/pages/CartPage';
 import { CheckoutPage } from '@/pages/CheckoutPage';
 import HomePage from '@/pages/HomePage';
 import { OrderReceivedPage } from '@/pages/OrderReceivedPage';
@@ -11,7 +12,7 @@ export const AppRoutes = () => {
           <Route path="/" element={<HomePage />} />
           {/* <Route path='/gategory/:category' element={<HomePage />}/> */}
           <Route path='/product/:id' element={<ProductDetailPage />}/>
-          {/* <Route path='/cart' element={<CartPage />}/> */}
+          <Route path='/cart' element={<CartPage />}/>
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/success" element={<OrderReceivedPage />} />
         </Routes>
