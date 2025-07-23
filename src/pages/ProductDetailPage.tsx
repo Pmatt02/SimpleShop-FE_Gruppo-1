@@ -1,13 +1,10 @@
-import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { useProduct } from "@/hooks/useFetchData";
+import { useParams } from "react-router-dom";
 
-type ProductDetailProps = {
-  id: number;
-};
-
-export const ProductDetailPage = ({ id }: ProductDetailProps) => {
-  const { product } = useProduct(id);
+export const ProductDetailPage = () => {
+  const {id} = useParams();
+  const { product } = useProduct(Number(id));
   return (
     <>
         <div className="flex flex-col m-6 gap-3 items-center lg:flex-row lg:justify-center lg:gap-6 min-[560px]:mt-20">
