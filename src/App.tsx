@@ -11,14 +11,14 @@ import { OrderReceivedPage } from "./pages/OrderReceivedPage";
 const App: React.FC = () => {
   return (
     <>
-        <Navbar />
-        <HomePage />
-        {/* <ProductDetailPage id={1}/> */}
-        {/* <CheckoutPage /> */}
-        {/* <CartProvider>
-          <CartPage></CartPage>
-        </CartProvider> */}
-        {/* <OrderReceivedPage /> */}
+      <Navbar />
+      {/* /<HomePage / > */}
+      {/* <ProductDetailPage id={1}/> */}
+      {/* <CheckoutPage /> */}
+      <CartProvider>
+        <CartPage></CartPage>
+      </CartProvider>
+      {/* <OrderReceivedPage /> */}
     </>
   );
 };

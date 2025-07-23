@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { CartProduct } from "../types/Product";
+import type { Product, CartProduct } from "../types/Product";
 import { useCart } from "@/context/CartContext";
 import { Card, CardContent } from "@/components/ui/cartCard";
 import { Button } from "@/components/ui/button";
@@ -25,16 +25,13 @@ const CartPage: React.FC = () => {
 
     //prova test
     const handleAddTestProduct = () => {
-        const testProduct: CartProduct = {
-            product: {
-                id: Math.floor(Math.random() * 1000), // ID unico simulato
-                title: "Prodotto Finto",
-                price: Math.random() * 100,
-                description: "Un prodotto di test per simulare l'aggiunta",
-                category: "fake",
-                image: "https://via.placeholder.com/150"
-            },
-            quantity: 1
+        const testProduct: Product = {
+            id: Math.floor(Math.random() * 1000), // ID unico simulato
+            title: "Prodotto Finto",
+            price: Math.random() * 100,
+            description: "Un prodotto di test per simulare l'aggiunta",
+            category: "fake",
+            image: "https://via.placeholder.com/150",
         };
 
         dispatch({
