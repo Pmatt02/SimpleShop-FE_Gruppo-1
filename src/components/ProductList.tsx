@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Card from "@/components/ui/Card";
 import CardContent from "@/components/ui/CardContent";
 import { useFilter } from "@/hooks/useFilter";
+import { Link } from "react-router-dom";
 
 export default function ProductList() {
     // Usa il custom hook correttamente:
@@ -45,7 +46,7 @@ export default function ProductList() {
 
       {/* Lista prodotti */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {productsToShow.map((product) => (
+        {products.map((product) => (
           <Link to={`/product/${product.id}`}>
             <Card
               key={product.id}
