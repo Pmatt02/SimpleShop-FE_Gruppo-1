@@ -1,37 +1,24 @@
-import { useState } from "react";
-import { useCategories, useProducts, useProductsByCategory } from "@/hooks/useFetchData";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/ui/Card";
 import CardContent from "@/components/ui/CardContent";
+import { useFilter } from "@/hooks/useFilter";
 
 export default function ProductList() {
-    const { categories, isLoading: loadingCategories, isError: errorCategories } = useCategories();
-    const [selectedCategory, setSelectedCategory] = useState<string>("");
-
-    // Tutti i prodotti (default)
+    // Usa il custom hook correttamente:
     const {
-        products: allProducts,
-        isLoading: loadingAll,
-        isError: errorAll,
-    } = useProducts();
+        categories,
+        selectedCategory,
+        setSelectedCategory,
+        products,
+        isLoading,
+        isError,
+    } = useFilter();
 
-    // Prodotti filtrati (se una categoria è selezionata)
-    const {
-        products: filteredProducts,
-        isLoading: loadingFiltered,
-        isError: errorFiltered,
-    } = useProductsByCategory(selectedCategory);
-
-    // Logica per decidere cosa mostrare
-    const productsToShow = selectedCategory ? filteredProducts : allProducts;
-    const isLoading = selectedCategory ? loadingFiltered : loadingAll;
-    const isError = selectedCategory ? errorFiltered : errorAll;
-
-    if (loadingCategories || isLoading) {
+    if (isLoading) {
         return <div className="text-center mt-10">Caricamento...</div>;
     }
 
-    if (errorCategories || isError) {
+    if (isError) {
         return <div className="text-red-500 text-center mt-10">Errore nel caricamento dei dati</div>;
     }
 
@@ -56,7 +43,7 @@ export default function ProductList() {
 
             {/* Lista prodotti */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                {productsToShow.map((product) => (
+                {products.map((product) => (
                     <Card
                         key={product.id}
                         className="h-[600px] rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-1 flex flex-col"
@@ -79,7 +66,6 @@ export default function ProductList() {
                             </div>
                         </CardContent>
                     </Card>
-
                 ))}
             </div>
         </div>
