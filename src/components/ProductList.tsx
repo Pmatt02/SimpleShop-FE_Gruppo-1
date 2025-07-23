@@ -1,52 +1,26 @@
-import { useState } from "react";
-import {
-  useCategories,
-  useProducts,
-  useProductsByCategory,
-} from "@/hooks/useFetchData";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/ui/Card";
 import CardContent from "@/components/ui/CardContent";
-import { Link } from "react-router-dom";
+import { useFilter } from "@/hooks/useFilter";
 
 export default function ProductList() {
-  const {
-    categories,
-    isLoading: loadingCategories,
-    isError: errorCategories,
-  } = useCategories();
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+    // Usa il custom hook correttamente:
+    const {
+        categories,
+        selectedCategory,
+        setSelectedCategory,
+        products,
+        isLoading,
+        isError,
+    } = useFilter();
 
-  // Tutti i prodotti (default)
-  const {
-    products: allProducts,
-    isLoading: loadingAll,
-    isError: errorAll,
-  } = useProducts();
+    if (isLoading) {
+        return <div className="text-center mt-10">Caricamento...</div>;
+    }
 
-  // Prodotti filtrati (se una categoria è selezionata)
-  const {
-    products: filteredProducts,
-    isLoading: loadingFiltered,
-    isError: errorFiltered,
-  } = useProductsByCategory(selectedCategory);
-
-  // Logica per decidere cosa mostrare
-  const productsToShow = selectedCategory ? filteredProducts : allProducts;
-  const isLoading = selectedCategory ? loadingFiltered : loadingAll;
-  const isError = selectedCategory ? errorFiltered : errorAll;
-
-  if (loadingCategories || isLoading) {
-    return <div className="text-center mt-10">Caricamento...</div>;
-  }
-
-  if (errorCategories || isError) {
-    return (
-      <div className="text-red-500 text-center mt-10">
-        Errore nel caricamento dei dati
-      </div>
-    );
-  }
+    if (isError) {
+        return <div className="text-red-500 text-center mt-10">Errore nel caricamento dei dati</div>;
+    }
 
   return (
     <div className="px-6 py-12">
