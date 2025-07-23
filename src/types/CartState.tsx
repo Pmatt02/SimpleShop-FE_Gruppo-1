@@ -11,5 +11,6 @@ export type CartAction =
     | { type: "ADD_ITEM"; payload: CartProduct }
     | { type: "REMOVE_ITEM"; payload: number }
     | { type: "INCREMENT"; payload: number }
-    | { type: "DECREMENT"; payload: number };
+    | { type: "DECREMENT"; payload: number }
+    | { type: "CLEAR_CART" };
 

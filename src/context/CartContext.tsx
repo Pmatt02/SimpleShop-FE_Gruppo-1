@@ -65,6 +65,13 @@ const CartReducer = (state: InitialState, action: CartAction): InitialState => {
             };
         }
 
+        case "CLEAR_CART": {
+            return {
+                ...state,
+                cart: [],
+            };
+        }
+
         default:
             return state;
     }
