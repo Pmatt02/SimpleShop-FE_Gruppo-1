@@ -9,6 +9,6 @@ export type Product = {
 
 
 export type CartProduct = {
-    product: Product,
+    product: Product | null,
     quantity: number
 }
