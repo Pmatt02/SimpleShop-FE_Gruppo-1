@@ -3,6 +3,8 @@ import Card from "@/components/ui/Card";
 import CardContent from "@/components/ui/CardContent";
 import { useFilter } from "@/hooks/useFilter";
 import { Link } from "react-router-dom";
+import { useCart } from "@/hooks/useCart";
+import type { Product } from "@/types/Product";
 
 export default function ProductList() {
   // Usa il custom hook correttamente:
@@ -14,6 +16,17 @@ export default function ProductList() {
     isLoading,
     isError,
   } = useFilter();
+
+  const { dispatch } = useCart();
+  const addToCart = (product: Product) => {
+    dispatch({
+      type: "ADD_ITEM",
+      payload: {
+        product: product,
+        quantity: 1,
+      },
+    });
+  };
 
   if (isLoading) {
     return <div className="text-center mt-10">Caricamento...</div>;
@@ -73,7 +86,10 @@ export default function ProductList() {
                 <span className="text-blue-600 font-bold text-lg">
                   €{product.price}
                 </span>
-                <Button className="rounded-full px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white">
+                <Button
+                  className="rounded-full px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white"
+                  onClick={() => addToCart(product)}
+                >
                   Aggiungi
                 </Button>
               </div>

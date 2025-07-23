@@ -19,12 +19,12 @@ const CartReducer = (state: InitialState, action: CartAction): InitialState => {
     switch (action.type) {
 
         case "ADD_ITEM": {
-            const exists = state.cart.find(item => item.product.id === action.payload.product.id);
+            const exists = state.cart.find(item => item.product?.id === action.payload.product?.id);
             if (exists) {
                 return {
                     ...state,
                     cart: state.cart.map(item =>
-                        item.product.id === action.payload.product.id
+                        item.product?.id === action.payload.product?.id
                             ? { ...item, quantity: item.quantity + action.payload.quantity }
                             : item
                     ),
@@ -39,7 +39,7 @@ const CartReducer = (state: InitialState, action: CartAction): InitialState => {
         case "REMOVE_ITEM": {
             return {
                 ...state,
-                cart: state.cart.filter(item => item.product.id !== action.payload), //qui payload è l'id del prodotto da eliminare
+                cart: state.cart.filter(item => item.product?.id !== action.payload), //qui payload è l'id del prodotto da eliminare
             };
         }
 
@@ -47,7 +47,7 @@ const CartReducer = (state: InitialState, action: CartAction): InitialState => {
             return {
                 ...state,
                 cart: state.cart.map(item =>  //map per scorrere i prodotti, se ne trova uno con id uguale crea una copia e aggiunge 1 alla quantità
-                    item.product.id === action.payload
+                    item.product?.id === action.payload
                         ? { ...item, quantity: item.quantity + 1 }
                         : item
                 ),
@@ -58,7 +58,7 @@ const CartReducer = (state: InitialState, action: CartAction): InitialState => {
             return {
                 ...state,
                 cart: state.cart.map(item =>
-                    item.product.id === action.payload && item.quantity > 1
+                    item.product?.id === action.payload && item.quantity > 1
                         ? { ...item, quantity: item.quantity - 1 }
                         : item
                 ),
