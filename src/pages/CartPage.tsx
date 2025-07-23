@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { CartProduct } from "../types/Product";
+import type { Product, CartProduct } from "../types/Product";
 import { useCart } from "@/context/CartContext";
 import { Card, CardContent } from "@/components/ui/cartCard";
 import { Button } from "@/components/ui/button";
@@ -25,16 +25,13 @@ const CartPage: React.FC = () => {
 
     //prova test
     const handleAddTestProduct = () => {
-        const testProduct: CartProduct = {
-            product: {
-                id: Math.floor(Math.random() * 1000), // ID unico simulato
-                title: "Prodotto Finto",
-                price: Math.random() * 100,
-                description: "Un prodotto di test per simulare l'aggiunta",
-                category: "fake",
-                image: "https://via.placeholder.com/150"
-            },
-            quantity: 1
+        const testProduct: Product = {
+            id: Math.floor(Math.random() * 1000), // ID unico simulato
+            title: "Prodotto Finto",
+            price: Math.random() * 100,
+            description: "Un prodotto di test per simulare l'aggiunta",
+            category: "fake",
+            image: "https://via.placeholder.com/150",
         };
 
         dispatch({
@@ -52,8 +49,8 @@ const CartPage: React.FC = () => {
     );
 
     return (
-        <div className="p-6 max-w-3xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6 text-center">Il tuo Carrello</h1>
+        <div className="p-4 sm:p-6 max-w-3xl mx-auto">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">Il tuo Carrello</h1>
 
             {/*bottone test aggiungi prodotto*/}
             <div className="text-center mb-4">
@@ -66,7 +63,7 @@ const CartPage: React.FC = () => {
             {state.cart.length === 0 ? (
                 <p className="text-center text-gray-500">Non c'è niente qui!</p>
             ) : (
-                <div className="bg-green-100 rounded-2xl shadow-lg p-6 space-y-4">
+                <div className="bg-blue-100 rounded-2xl shadow-lg p-6 space-y-4">
                     {state.cart.map((item) => (
                         <Card key={item.product.id} className="shadow-md">
                             <CardContent className="flex items-center justify-between gap-4 p-4">
@@ -74,7 +71,7 @@ const CartPage: React.FC = () => {
                                     <img
                                         src={item.product.image}
                                         alt={item.product.title}
-                                        className="w-16 h-16 object-cover rounded"
+                                        className="w-20 h-20 object-cover rounded sm:w-24 sm:h-24"
                                     />
                                     <div>
                                         <h2 className="font-semibold">{item.product.title}</h2>
@@ -88,7 +85,7 @@ const CartPage: React.FC = () => {
                                 </div>
 
                                 {/*Bottoni per increment, decrement e rimuovi */}
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap justify-end">
                                     <Button
                                         size="icon"
                                         variant="outline"
@@ -118,7 +115,7 @@ const CartPage: React.FC = () => {
                     ))}
 
                     {/*totale carrello */}
-                    <div className="text-right mt-6">
+                    <div className="text-right mt-6 sm:text-right text-center">
                         <p className="text-lg font-bold">
                             Totale: €{totalPrice.toFixed(2)}
                         </p>
@@ -134,7 +131,7 @@ const CartPage: React.FC = () => {
                     <Button
                         size="lg"
                         variant="outline"
-                        className="bg-green-600 text-white text-lg hover:bg-green-700"
+                        className="w-full sm:w-auto bg-green-600 text-white text-lg hover:bg-green-700"
                     >
                         <ShoppingCart /> Vai al checkout</Button>
                 </div>
